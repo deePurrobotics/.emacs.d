@@ -31,11 +31,14 @@
 (setq inhibit-startup-message t) ;; hide the startup message
 (load-theme 'material t) ;; load material theme
 (global-linum-mode t) ;; enable line numbers globally
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2) ;; set indent to 2 spaces
 
 ;; PYTHON CONFIGURATION
 ;; --------------------------------------
 
 (elpy-enable)
+
 
 ;; use flycheck not flymake with elpy
 (when (require 'flycheck nil t)
@@ -46,6 +49,24 @@
 (require 'py-autopep8)
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
+;; AUCTEX CONFIGURATION
+;; --------------------------------------
+
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+
+;; enable auto-fill-mode
+(add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
+;; enable folding
+(add-hook 'LaTeX-mode-hook (lambda ()
+                             (TeX-fold-mode 1)))
+
+; roslaunch and gazebo world highlighting
+(add-to-list 'auto-mode-alist '("\\.launch$" . xml-mode))
+(add-to-list 'auto-mode-alist '("\\.world$" . xml-mode))
+(add-to-list 'auto-mode-alist '("\\.xacro$" . xml-mode))
+
+
 ;; init.el ends here
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -54,7 +75,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (py-autopep8 material-theme flycheck elpy ein better-defaults))))
+    (yaml-mode auctex markdown-mode py-autopep8 material-theme flycheck elpy ein better-defaults))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
